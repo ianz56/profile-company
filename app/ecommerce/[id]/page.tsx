@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { Star, ShoppingCart, ArrowLeft, Loader2, Minus, Plus, ShieldCheck, Truck, Heart, MessageSquare, Send } from 'lucide-react';
 import { motion } from 'framer-motion';
