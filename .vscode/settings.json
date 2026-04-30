@@ -6,6 +6,14 @@
   "less.validate": false,
   "scss.validate": false,
   "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+  "less.lint.unknownAtRules": "ignore",
   "tailwindCSS.lint.unknownAtRules": "ignore",
-  "css.customData": [".vscode/css_custom_data.json"]
+  "css.customData": ["./.vscode/css_custom_data.json"],
+  "[css]": {
+    "editor.validate": false
+  },
+  "[tailwindcss]": {
+    "editor.validate": false
+  }
 }

@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Search, MapPin, Phone, Clock, Navigation } from 'lucide-react';
+import { Search, MapPin, Phone, Clock, Navigation, ArrowLeft } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const locations = [
   {
@@ -35,34 +36,45 @@ const locations = [
 
 export default function LocationPage() {
   const [searchQuery, setSearchQuery] = useState('');
+  const router = useRouter();
 
   return (
     <div className="bg-white min-h-screen font-sans">
       {/* Hero Header Section */}
-      <section className="pt-32 pb-20 px-6 bg-[#f8fcf9]">
-        <div className="container mx-auto text-center max-w-4xl">
-          <h1 className="text-4xl md:text-6xl font-black text-gray-900 mb-6 tracking-tight">
-            Cari Lokasi <span className="text-[#00AA13]">Segar</span><span className="text-[#FF9F1C]">Tani</span>
-          </h1>
-          <p className="text-lg md:text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-            Cek apakah area Anda sudah masuk dalam jangkauan layanan pengiriman kilat kami.
-          </p>
+      <section className="pt-16 pb-12 px-6 bg-[#f8fcf9]">
+        <div className="container mx-auto max-w-4xl">
+          <button 
+            onClick={() => router.back()}
+            className="flex items-center gap-2 text-gray-500 font-bold hover:text-[#00AA13] transition-colors mb-8 group"
+          >
+            <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+            Kembali
+          </button>
+          
+          <div className="text-center">
+            <h1 className="text-4xl md:text-6xl font-black text-gray-900 mb-6 tracking-tight">
+              Cari Lokasi <span className="text-[#00AA13]">Segar</span><span className="text-[#FF9F1C]">Tani</span>
+            </h1>
+            <p className="text-lg md:text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
+              Cek apakah area Anda sudah masuk dalam jangkauan layanan pengiriman kilat kami.
+            </p>
 
-          {/* Search Bar */}
-          <div className="relative max-w-2xl mx-auto bg-white rounded-full shadow-2xl shadow-gray-200/50 p-2 flex items-center border border-gray-100">
-            <div className="flex-grow flex items-center px-4">
-              <MapPin className="text-gray-400 mr-3" size={20} />
-              <input
-                type="text"
-                placeholder="Masukkan kota atau kodepos Anda..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full py-3 focus:outline-none text-gray-700 font-medium"
-              />
+            {/* Search Bar */}
+            <div className="relative max-w-2xl mx-auto bg-white rounded-full shadow-2xl shadow-gray-200/50 p-2 flex items-center border border-gray-100">
+              <div className="flex-grow flex items-center px-4">
+                <MapPin className="text-gray-400 mr-3" size={20} />
+                <input
+                  type="text"
+                  placeholder="Masukkan kota atau kodepos Anda..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full py-3 focus:outline-none text-gray-700 font-medium"
+                />
+              </div>
+              <button className="bg-[#00AA13] text-white px-8 py-3.5 rounded-full font-bold hover:bg-[#00880F] transition-all shadow-lg active:scale-95">
+                Cek Lokasi
+              </button>
             </div>
-            <button className="bg-[#00AA13] text-white px-8 py-3.5 rounded-full font-bold hover:bg-[#00880F] transition-all shadow-lg active:scale-95">
-              Cek Lokasi
-            </button>
           </div>
         </div>
       </section>

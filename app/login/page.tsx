@@ -1,12 +1,43 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Mail, Lock, ArrowRight, Home } from 'lucide-react';
+import { Mail, Lock, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) throw error;
+
+      if (data.user) {
+        router.push('/ecommerce');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Gagal masuk. Silakan periksa kembali email dan password Anda.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 md:p-8">
       <div className="bg-white w-full max-w-6xl rounded-[3rem] shadow-2xl overflow-hidden flex flex-col lg:flex-row min-h-[700px]">
@@ -26,15 +57,29 @@ export default function LoginPage() {
 
           <div className="max-w-md w-full mx-auto text-center">
             <h1 className="text-4xl font-black text-gray-900 mb-2">Masuk ke Akun</h1>
-            <p className="text-gray-400 font-medium mb-12 text-sm">Cari sayuran segar pilihan Anda di sini.</p>
+            <p className="text-gray-400 font-medium mb-8 text-sm">Cari sayuran segar pilihan Anda di sini.</p>
 
-            <form className="space-y-8 text-left">
+            {error && (
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-6 p-4 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-3 text-red-600 text-sm font-bold"
+              >
+                <AlertCircle size={18} />
+                {error}
+              </motion.div>
+            )}
+
+            <form onSubmit={handleLogin} className="space-y-6 text-left">
               <div>
-                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">EMAIL ATAU USERNAME</label>
+                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">EMAIL</label>
                 <div className="relative">
                   <Mail size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-300" />
                   <input 
-                    type="text" 
+                    type="email" 
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="Masukkan email kamu" 
                     className="w-full bg-white border border-gray-100 rounded-2xl px-14 py-5 focus:outline-none focus:border-[#00AA13] focus:ring-4 focus:ring-[#00AA13]/5 text-gray-700 font-medium transition-all" 
                   />
@@ -50,14 +95,29 @@ export default function LoginPage() {
                   <Lock size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-300" />
                   <input 
                     type="password" 
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     placeholder="........." 
                     className="w-full bg-white border border-gray-100 rounded-2xl px-14 py-5 focus:outline-none focus:border-[#00AA13] focus:ring-4 focus:ring-[#00AA13]/5 text-gray-700 font-medium transition-all" 
                   />
                 </div>
               </div>
 
-              <button type="button" className="w-full bg-[#00AA13] hover:bg-[#008810] text-white font-black py-5 rounded-2xl transition-all shadow-xl shadow-[#00AA13]/20 flex items-center justify-center gap-2 group text-lg">
-                Masuk Sekarang <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+              <button 
+                type="submit" 
+                disabled={loading}
+                className="w-full bg-[#00AA13] hover:bg-[#008810] disabled:bg-gray-300 text-white font-black py-5 rounded-2xl transition-all shadow-xl shadow-[#00AA13]/20 flex items-center justify-center gap-2 group text-lg"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 size={22} className="animate-spin" /> Sedang Masuk...
+                  </>
+                ) : (
+                  <>
+                    Masuk Sekarang <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+                  </>
+                )}
               </button>
             </form>
 
