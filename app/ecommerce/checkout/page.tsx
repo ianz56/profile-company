@@ -194,12 +194,23 @@ export default function CheckoutPage() {
       setOrderSuccess(true);
       clearCart();
     } catch (err: any) {
-      console.error('Checkout Error:', err);
-      alert('Gagal memproses pesanan: ' + err.message);
+      // Log full error details for debugging
+      const errMsg = err?.message || err?.error_description || JSON.stringify(err) || 'Unknown error';
+      const errCode = err?.code || '';
+      const errDetails = err?.details || '';
+      console.error('Checkout Error Full:', { message: errMsg, code: errCode, details: errDetails, raw: err });
+      alert(`Gagal memproses pesanan:\nCode: ${errCode}\nPesan: ${errMsg}\nDetail: ${errDetails}`);
     } finally {
       setLoading(false);
     }
   };
+
+  // ✅ Hooks HARUS dipanggil sebelum semua conditional return
+  useEffect(() => {
+    if (selectedItems.length === 0 && !fetchingProfile && !orderSuccess) {
+      router.push('/ecommerce');
+    }
+  }, [selectedItems.length, fetchingProfile, orderSuccess, router]);
 
   if (orderSuccess) {
     return (
@@ -224,12 +235,6 @@ export default function CheckoutPage() {
       </div>
     );
   }
-
-  useEffect(() => {
-    if (selectedItems.length === 0 && !fetchingProfile && !orderSuccess) {
-      router.push('/ecommerce');
-    }
-  }, [selectedItems.length, fetchingProfile, orderSuccess, router]);
 
   if (fetchingProfile) {
     return (

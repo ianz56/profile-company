@@ -3,36 +3,66 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Mail, Lock, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, Loader2, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const router = useRouter();
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setSuccess(false);
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      // 1. Sign Up User
+      const { data, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          data: {
+            full_name: fullName,
+          },
+        },
       });
 
-      if (error) throw error;
+      if (signUpError) throw signUpError;
 
       if (data.user) {
-        router.push('/ecommerce');
+        // 2. Create Profile entry
+        // Catatan: Jika konfirmasi email aktif, insert ini mungkin gagal karena RLS 
+        // yang membutuhkan user terautentikasi. User baru bisa mengupdate profile setelah konfirmasi email & login.
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .insert([
+            {
+              id: data.user.id,
+              full_name: fullName,
+            },
+          ]);
+
+        if (profileError) {
+          console.error('Error creating profile:', profileError.message);
+          // Kita tidak lempar error di sini karena user utamanya sudah berhasil terbuat di Auth
+        }
+
+        setSuccess(true);
+        // Otomatis redirect ke login setelah 4 detik
+        setTimeout(() => {
+          router.push('/login');
+        }, 4000);
       }
     } catch (err: any) {
-      setError(err.message || 'Gagal masuk. Silakan periksa kembali email dan password Anda.');
+      setError(err.message || 'Gagal mendaftar. Silakan coba lagi.');
     } finally {
       setLoading(false);
     }
@@ -49,28 +79,54 @@ export default function LoginPage() {
                 <span className="text-2xl font-black text-[#00AA13]">Segar<span className="text-[#FF9F1C]">Tani</span></span>
              </div>
              <div className="w-full text-left">
-                <Link href="/" className="flex items-center gap-2 text-sm font-bold text-[#00AA13] hover:opacity-80 transition-opacity">
-                  <ArrowRight size={16} className="rotate-180" /> Kembali ke Beranda
+                <Link href="/login" className="flex items-center gap-2 text-sm font-bold text-[#00AA13] hover:opacity-80 transition-opacity">
+                  <ArrowRight size={16} className="rotate-180" /> Kembali ke Login
                 </Link>
              </div>
           </div>
 
           <div className="max-w-md w-full mx-auto text-center">
-            <h1 className="text-4xl font-black text-gray-900 mb-2">Masuk ke Akun</h1>
-            <p className="text-gray-400 font-medium mb-8 text-sm">Cari sayuran segar pilihan Anda di sini.</p>
+            <h1 className="text-4xl font-black text-gray-900 mb-2">Buat Akun Baru</h1>
+            <p className="text-gray-400 font-medium mb-8 text-sm">Bergabunglah dengan SegarTani untuk belanja lebih mudah.</p>
 
             {error && (
               <motion.div 
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mb-6 p-4 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-3 text-red-600 text-sm font-bold"
+                className="mb-6 p-4 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-3 text-red-600 text-sm font-bold text-left"
               >
-                <AlertCircle size={18} />
-                {error}
+                <AlertCircle size={18} className="shrink-0" />
+                <span>{error}</span>
               </motion.div>
             )}
 
-            <form onSubmit={handleLogin} className="space-y-6 text-left">
+            {success && (
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-6 p-4 bg-green-50 border border-green-100 rounded-2xl flex items-center gap-3 text-green-700 text-sm font-bold text-left"
+              >
+                <CheckCircle2 size={18} className="shrink-0" />
+                <span>Pendaftaran berhasil! Silakan cek email Anda untuk konfirmasi (jika diperlukan). Mengalihkan ke halaman login...</span>
+              </motion.div>
+            )}
+
+            <form onSubmit={handleRegister} className="space-y-6 text-left">
+              <div>
+                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">NAMA LENGKAP</label>
+                <div className="relative">
+                  <User size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-300" />
+                  <input 
+                    type="text" 
+                    required
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    placeholder="Masukkan nama lengkap kamu" 
+                    className="w-full bg-white border border-gray-100 rounded-2xl px-14 py-5 focus:outline-none focus:border-[#00AA13] focus:ring-4 focus:ring-[#00AA13]/5 text-gray-700 font-medium transition-all" 
+                  />
+                </div>
+              </div>
+
               <div>
                 <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">EMAIL</label>
                 <div className="relative">
@@ -87,10 +143,7 @@ export default function LoginPage() {
               </div>
 
               <div>
-                <div className="flex justify-between items-center mb-3">
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">PASSWORD</label>
-                  <Link href="#" className="text-[10px] font-black text-[#00AA13] hover:underline uppercase tracking-widest">Lupa Password?</Link>
-                </div>
+                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">PASSWORD</label>
                 <div className="relative">
                   <Lock size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-300" />
                   <input 
@@ -98,7 +151,8 @@ export default function LoginPage() {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="........." 
+                    placeholder="Minimal 6 karakter" 
+                    minLength={6}
                     className="w-full bg-white border border-gray-100 rounded-2xl px-14 py-5 focus:outline-none focus:border-[#00AA13] focus:ring-4 focus:ring-[#00AA13]/5 text-gray-700 font-medium transition-all" 
                   />
                 </div>
@@ -106,34 +160,23 @@ export default function LoginPage() {
 
               <button 
                 type="submit" 
-                disabled={loading}
+                disabled={loading || success}
                 className="w-full bg-[#00AA13] hover:bg-[#008810] disabled:bg-gray-300 text-white font-black py-5 rounded-2xl transition-all shadow-xl shadow-[#00AA13]/20 flex items-center justify-center gap-2 group text-lg"
               >
                 {loading ? (
                   <>
-                    <Loader2 size={22} className="animate-spin" /> Sedang Masuk...
+                    <Loader2 size={22} className="animate-spin" /> Sedang Mendaftar...
                   </>
                 ) : (
                   <>
-                    Masuk Sekarang <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+                    Daftar Sekarang <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
                   </>
                 )}
               </button>
             </form>
 
-            <div className="mt-10 flex items-center gap-4">
-              <div className="flex-grow h-px bg-gray-100"></div>
-              <span className="text-[10px] font-black text-gray-300 uppercase tracking-widest">ATAU</span>
-              <div className="flex-grow h-px bg-gray-100"></div>
-            </div>
-
-            <button className="mt-10 w-full bg-white border border-gray-100 py-5 rounded-2xl font-bold text-gray-600 hover:bg-gray-50 transition-all flex items-center justify-center gap-3 shadow-sm border border-gray-100">
-              <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google" className="h-6 w-6" />
-              Masuk dengan Google
-            </button>
-
             <p className="mt-12 text-center text-sm font-medium text-gray-400">
-              Belum punya akun? <Link href="/register" className="text-[#00AA13] font-black hover:underline">Daftar Gratis</Link>
+              Sudah punya akun? <Link href="/login" className="text-[#00AA13] font-black hover:underline">Masuk di Sini</Link>
             </p>
           </div>
         </div>
@@ -151,7 +194,7 @@ export default function LoginPage() {
               animate={{ opacity: 1, y: 0 }}
               className="text-5xl font-black text-white mb-4 leading-tight"
             >
-              Selamat Datang!!
+              Mari Bergabung!
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -159,7 +202,7 @@ export default function LoginPage() {
               transition={{ delay: 0.1 }}
               className="text-lg font-bold text-white/90 mb-8 tracking-tight"
             >
-              #PasarSegarPilihanAnda
+              #SegarTaniKeluargaAnda
             </motion.p>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -167,7 +210,7 @@ export default function LoginPage() {
               transition={{ delay: 0.2 }}
               className="text-base text-white/80 leading-relaxed font-medium"
             >
-              Kami menghadirkan SegarTani untuk Anda. untuk menyambut kedatangan anda dengan suka cita.
+              Dapatkan akses ke sayuran dan buah organik terbaik langsung dari petani. Sehat untuk Anda, sehat untuk keluarga.
             </motion.p>
           </div>
         </div>

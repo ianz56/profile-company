@@ -78,7 +78,7 @@ export default function Navbar() {
     router.push('/');
   };
 
-  if (pathname === '/login') {
+  if (pathname === '/login' || pathname === '/register') {
     return null;
   }
 
@@ -199,7 +199,7 @@ export default function Navbar() {
               </button>
             ) : (
               <Link
-                href="/login"
+                href="/register"
                 className="bg-primary text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-primary-dark transition-all transform hover:scale-105 inline-block"
               >
                 Daftar
@@ -297,7 +297,7 @@ export default function Navbar() {
                 </button>
               ) : (
                 <Link
-                  href="/login"
+                  href="/register"
                   onClick={() => setIsOpen(false)}
                   className="bg-primary text-white text-center px-6 py-3 rounded-xl font-semibold hover:bg-primary-dark transition-colors"
                 >
