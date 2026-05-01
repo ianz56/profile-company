@@ -9,6 +9,9 @@ import {
 	Users,
 	Mail,
 	Star,
+	Store,
+	ShoppingBag,
+	Headset,
 } from "lucide-react";
 
 export default function Home() {
@@ -162,7 +165,10 @@ export default function Home() {
 							</h2>
 						</div>
 						<div className="grid grid-cols-2 lg:grid-cols-4 gap-12 text-center">
-							<div>
+							<div className="flex flex-col items-center">
+								<div className="w-16 h-16 bg-[#00AA13]/10 rounded-full flex items-center justify-center mb-4">
+									<Store className="w-8 h-8 text-[#00AA13]" />
+								</div>
 								<h3 className="text-4xl md:text-5xl font-black text-[#00AA13] mb-3">
 									25+
 								</h3>
@@ -170,7 +176,10 @@ export default function Home() {
 									Pasar Mitra
 								</p>
 							</div>
-							<div>
+							<div className="flex flex-col items-center">
+								<div className="w-16 h-16 bg-[#FF9F1C]/10 rounded-full flex items-center justify-center mb-4">
+									<ShoppingBag className="w-8 h-8 text-[#FF9F1C]" />
+								</div>
 								<h3 className="text-4xl md:text-5xl font-black text-[#FF9F1C] mb-3">
 									50k+
 								</h3>
@@ -178,7 +187,10 @@ export default function Home() {
 									Produk Terjual
 								</p>
 							</div>
-							<div>
+							<div className="flex flex-col items-center">
+								<div className="w-16 h-16 bg-[#00AA13]/10 rounded-full flex items-center justify-center mb-4">
+									<Users className="w-8 h-8 text-[#00AA13]" />
+								</div>
 								<h3 className="text-4xl md:text-5xl font-black text-[#00AA13] mb-3">
 									10k+
 								</h3>
@@ -186,7 +198,10 @@ export default function Home() {
 									Pelanggan Aktif
 								</p>
 							</div>
-							<div>
+							<div className="flex flex-col items-center">
+								<div className="w-16 h-16 bg-[#FF9F1C]/10 rounded-full flex items-center justify-center mb-4">
+									<Headset className="w-8 h-8 text-[#FF9F1C]" />
+								</div>
 								<h3 className="text-4xl md:text-5xl font-black text-[#FF9F1C] mb-3">
 									24/7
 								</h3>
