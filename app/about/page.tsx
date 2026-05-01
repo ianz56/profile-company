@@ -132,7 +132,7 @@ export default function AboutPage() {
 						<div
 							className="flex flex-col items-center"
 							data-aos="fade-up"
-							data-aos-delay="200"
+							data-aos-delay="100"
 						>
 							<div className="mb-4 flex items-center justify-center h-20 w-20 rounded-full bg-white overflow-hidden p-3 shadow-sm border border-gray-100">
 								<img
