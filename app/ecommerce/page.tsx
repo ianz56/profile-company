@@ -150,7 +150,7 @@ export default function EcommercePage() {
                         alt={product.name}
                         className={`w-full h-full object-cover transition-transform duration-700 ease-in-out ${isOutOfStock ? '' : 'group-hover:scale-110'}`}
                       />
-                      <div className="absolute top-5 right-5 flex flex-col gap-2 z-10">
+                      <div className="absolute top-5 right-5 flex flex-col items-end gap-2 z-10">
                         <span className="bg-white/90 backdrop-blur-sm text-[#2E7D32] text-[10px] font-black px-3 py-1 rounded-lg border border-[#2E7D32]/20">
                           {product.category}
                         </span>
@@ -166,7 +166,7 @@ export default function EcommercePage() {
                               category: product.category
                             });
                           }}
-                          className={`p-2 rounded-full backdrop-blur-md transition-all shadow-md ${
+                          className={`w-10 h-10 flex items-center justify-center rounded-full backdrop-blur-md transition-all shadow-md ${
                             isInWishlist(product.id) 
                               ? 'bg-red-500 text-white shadow-red-200' 
                               : 'bg-white/80 text-gray-400 hover:text-red-500'
