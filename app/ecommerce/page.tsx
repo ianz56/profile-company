@@ -117,12 +117,17 @@ export default function EcommercePage() {
         {/* Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {filteredProducts.length > 0 ? (
-            filteredProducts.map((product) => {
+            filteredProducts.map((product, index) => {
               const discountPrice = product.price - (product.price * product.discount / 100);
               const isOutOfStock = product.stock <= 0;
 
               return (
-                <div key={product.id} className="relative">
+                <div 
+                  key={product.id} 
+                  className="relative"
+                  data-aos="fade-up"
+                  data-aos-delay={(index % 4) * 100}
+                >
                   <Link 
                     href={isOutOfStock ? '#' : `/ecommerce/${product.id}`}
                     className={`group flex flex-col h-full bg-white rounded-[2rem] border border-gray-100 hover:border-[#2E7D32] transition-all duration-500 overflow-hidden hover:shadow-2xl ${isOutOfStock ? 'cursor-not-allowed opacity-75' : 'cursor-pointer'}`}
