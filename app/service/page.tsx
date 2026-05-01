@@ -246,7 +246,10 @@ export default function ServicePage() {
 			{/* CTA Section */}
 			<section className="py-20 bg-white">
 				<div className="container mx-auto px-6">
-					<div className="max-w-5xl mx-auto bg-[#00AA13] rounded-[3rem] p-10 md:p-16 text-center text-white relative overflow-hidden shadow-xl shadow-[#00AA13]/20">
+					<div
+						className="max-w-5xl mx-auto bg-[#00AA13] rounded-[3rem] p-10 md:p-16 text-center text-white relative overflow-hidden shadow-xl shadow-[#00AA13]/20"
+						data-aos="fade-up"
+					>
 						{/* Subtle Pattern Overlay */}
 						<div
 							className="absolute inset-0 opacity-10 pointer-events-none"
@@ -257,7 +260,7 @@ export default function ServicePage() {
 							}}
 						></div>
 
-						<div className="relative z-10" data-aos="fade-up">
+						<div className="relative z-10">
 							<h2 className="text-3xl md:text-4xl font-black mb-6">
 								Siap Menikmati Layanan Kami?
 							</h2>

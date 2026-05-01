@@ -50,23 +50,31 @@ export default function Home() {
 				<div className="absolute top-0 right-0 w-[60vw] h-[60vw] bg-[#00AA13] rounded-full blur-[140px] opacity-[0.25] -translate-y-1/3 translate-x-1/4 pointer-events-none z-0"></div>
 				<div className="absolute bottom-0 left-0 w-[60vw] h-[60vw] bg-[#FF9F1C] rounded-full blur-[140px] opacity-[0.20] translate-y-1/3 -translate-x-1/4 pointer-events-none z-0"></div>
 
-				<div
-					className="container mx-auto px-6 relative z-10 flex flex-col items-center justify-center text-center"
-					data-aos="fade-up"
-				>
+				<div className="container mx-auto px-6 relative z-10 flex flex-col items-center justify-center text-center">
 					{/* Text Content */}
 					<div className="flex flex-col items-center w-full max-w-4xl mx-auto">
-						<span className="inline-block bg-[#00AA13] text-white px-4 py-1.5 rounded-full text-sm font-bold mb-8 mt-0">
+						<span
+							className="inline-block bg-[#00AA13] text-white px-4 py-1.5 rounded-full text-sm font-bold mb-8 mt-0"
+							data-aos="fade-up"
+						>
 							Kini Hadir di Bandung & Sekitarnya
 						</span>
 
-						<h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-8 text-gray-900 max-w-5xl tracking-tight">
+						<h1
+							className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-8 text-gray-900 max-w-5xl tracking-tight"
+							data-aos="fade-up"
+							data-aos-delay="100"
+						>
 							Sayuran <span className="text-[#00AA13]">Segar</span>, <br />
 							Langsung dari{" "}
 							<span className="text-[#FF9F1C]">Pasar Tradisional</span>
 						</h1>
 
-						<p className="text-lg md:text-xl text-gray-500 mb-12 leading-relaxed max-w-2xl mx-auto font-medium">
+						<p
+							className="text-lg md:text-xl text-gray-500 mb-12 leading-relaxed max-w-2xl mx-auto font-medium"
+							data-aos="fade-up"
+							data-aos-delay="200"
+						>
 							SegarTani menyediakan platform belanja bahan masakan kualitas
 							premium dengan harga terbaik. Penuhi kebutuhan dapur Anda hari
 							ini.
@@ -76,12 +84,16 @@ export default function Home() {
 							<Link
 								href="/about"
 								className="bg-primary hover:bg-primary-dark text-white px-8 py-3.5 rounded-full font-bold text-lg transition-all shadow-lg hover:shadow-xl flex items-center justify-center"
+								data-aos="fade-up"
+								data-aos-delay="300"
 							>
 								Pelajari Tentang Kami
 							</Link>
 							<Link
 								href="/contact"
 								className="bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 px-8 py-3.5 rounded-full font-bold text-lg transition-all flex items-center justify-center shadow-sm"
+								data-aos="fade-up"
+								data-aos-delay="400"
 							>
 								Hubungi Kami
 							</Link>
