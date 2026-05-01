@@ -123,13 +123,14 @@ export default function Home() {
 							data-aos-delay={idx * 100}
 						>
 							{feature.image ? (
-								<div className="w-full h-40 rounded-2xl overflow-hidden mx-auto mb-6">
+								<div className="relative w-full h-40 rounded-2xl overflow-hidden mx-auto mb-6">
 									<Image
 										src={feature.image}
 										alt={feature.title}
-										width={400}
-										height={160}
-										className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+										fill
+										sizes="(max-width: 768px) 100vw, 25vw"
+										priority={idx <= 1}
+										className="object-cover group-hover:scale-105 transition-transform duration-300"
 									/>
 								</div>
 							) : (
