@@ -9,6 +9,7 @@ import {
 	Sprout,
 	Star,
 } from "lucide-react";
+import FAQAccordion from "@/components/FAQAccordion";
 
 const services = [
 	{
@@ -243,6 +244,10 @@ export default function ServicePage() {
 					</div>
 				</div>
 			</section>
+			
+			{/* FAQ Section */}
+			<FAQAccordion />
+
 			{/* CTA Section */}
 			<section className="py-20 bg-white">
 				<div className="container mx-auto px-6">
