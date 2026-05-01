@@ -70,12 +70,11 @@ export default function FAQAccordion() {
 							</button>
 
 							<div
-								className={`transition-all duration-300 ease-in-out ${
+								className={`overflow-hidden transition-all duration-300 ease-in-out ${
 									openIndex === index
 										? "max-h-96 opacity-100 pb-6 px-6"
 										: "max-h-0 opacity-0 px-6"
 								}`}
-								style={{ visibility: openIndex === index ? "visible" : "hidden" }}
 							>
 								<p className="text-gray-600 leading-relaxed pt-2 border-t border-gray-100">
 									{faq.answer}

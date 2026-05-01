@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { Search, Star, ShoppingCart, ChevronDown } from 'lucide-react';
+import Link from 'next/link';
+import { Search, Star, ShoppingCart, ChevronDown, ArrowRight } from 'lucide-react';
 
 // Data Katalog Bahan Masakan SegarTani (Static Data untuk Demo Berkualitas)
 const products = [
@@ -65,9 +66,15 @@ export default function ProductPage() {
         <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">
           Katalog Bahan Masakan <span className="text-[#00AA13]">Segar</span><span className="text-[#FF9F1C]">Tani</span>
         </h1>
-        <p className="text-gray-500 max-w-2xl mx-auto text-base md:text-lg">
+        <p className="text-gray-500 max-w-2xl mx-auto text-base md:text-lg mb-6">
           Kebutuhan dapur lengkap mulai dari sayuran, buah, hingga bumbu masak berkualitas.
         </p>
+        <Link
+          href="/ecommerce"
+          className="inline-flex items-center gap-2 bg-[#00AA13] text-white px-6 py-3 rounded-full font-bold hover:bg-[#008810] transition-all shadow-lg"
+        >
+          Belanja Sekarang <ArrowRight size={18} />
+        </Link>
       </div>
 
       <div className="container mx-auto px-6 max-w-7xl">
@@ -158,9 +165,12 @@ export default function ProductPage() {
                           {formatIDR(discountPrice)}
                         </span>
                       </div>
-                      <button className="p-3.5 rounded-2xl bg-white border border-gray-100 text-gray-900 hover:bg-[#2E7D32] hover:text-white transition-all shadow-sm">
+                      <Link 
+                        href="/ecommerce"
+                        className="p-3.5 rounded-2xl bg-white border border-gray-100 text-gray-900 hover:bg-[#2E7D32] hover:text-white transition-all shadow-sm"
+                      >
                         <ShoppingCart size={20} />
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
