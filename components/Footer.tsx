@@ -44,7 +44,7 @@ export default function Footer() {
               <FooterLink href="/service">Layanan</FooterLink>
               <FooterLink href="/product">Produk</FooterLink>
               <FooterLink href="/contact">Kontak</FooterLink>
-              <FooterLink href="/login">Daftar Sekarang</FooterLink>
+              <FooterLink href="/register">Daftar Sekarang</FooterLink>
             </ul>
           </div>
 

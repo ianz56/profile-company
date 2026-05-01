@@ -106,6 +106,7 @@ export default function Navbar() {
                 alt="SegarTani Logo"
                 width={60}
                 height={60}
+                priority
                 className="h-12 w-auto object-contain"
               />
               <span className={`text-2xl font-bold text-primary tracking-tight`}>
@@ -119,6 +120,7 @@ export default function Navbar() {
                 alt="SegarTani Logo"
                 width={60}
                 height={60}
+                priority
                 className="h-12 w-auto object-contain"
               />
               <span className={`text-2xl font-bold text-primary tracking-tight`}>

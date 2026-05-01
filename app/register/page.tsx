@@ -76,7 +76,7 @@ export default function RegisterPage() {
         <div className="flex-1 p-8 md:p-16 flex flex-col justify-center relative bg-white">
           <div className="mb-12 flex flex-col items-center lg:items-start w-full">
              <div className="mb-4 flex items-center gap-2">
-                <Image src="/images/logo.jpg" alt="Logo" width={50} height={50} className="h-10 w-auto" />
+                <Image src="/images/logo.jpg" alt="Logo" width={50} height={50} priority className="h-10 w-auto" />
                 <span className="text-2xl font-black text-[#00AA13]">Segar<span className="text-[#FF9F1C]">Tani</span></span>
              </div>
              <div className="w-full text-left">
