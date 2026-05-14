@@ -1,26 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
-import Link from "next/link";
-import { supabase } from "@/lib/supabase";
-import {
-	Star,
-	ShoppingCart,
-	ArrowLeft,
-	Loader2,
-	Minus,
-	Plus,
-	ShieldCheck,
-	Truck,
-	Heart,
-	MessageSquare,
-	Send,
-} from "lucide-react";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import { useCart } from "@/context/CartContext";
-import { useWishlist } from "@/context/WishlistContext";
+import React, { useState, useEffect } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
+import { Star, ShoppingCart, ArrowLeft, Loader2, Minus, Plus, ShieldCheck, Truck, Heart, MessageSquare, Send } from 'lucide-react';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { useCart } from '@/context/CartContext';
+import { useWishlist } from '@/context/WishlistContext';
 
 interface Product {
 	id: number;
@@ -299,11 +286,10 @@ export default function ProductDetailPage() {
 											category: product.category,
 										})
 									}
-									className={`flex-1 font-black py-5 rounded-2xl transition-all shadow-xl flex items-center justify-center gap-3 text-lg active:scale-95 ${
-										isOutOfStock
+									className={`flex-1 font-black py-5 rounded-2xl transition-all shadow-xl flex items-center justify-center gap-3 text-lg active:scale-95 ${isOutOfStock
 											? "bg-gray-200 text-gray-400 cursor-not-allowed shadow-none"
 											: "bg-[#00AA13] hover:bg-[#008810] text-white shadow-[#00AA13]/20"
-									}`}
+										}`}
 								>
 									<ShoppingCart size={22} />
 									{isOutOfStock ? "Maaf, Stok Habis" : "Tambah ke Keranjang"}
@@ -318,11 +304,10 @@ export default function ProductDetailPage() {
 											category: product.category,
 										})
 									}
-									className={`p-5 rounded-2xl transition-all shadow-xl flex items-center justify-center border-2 active:scale-95 ${
-										isInWishlist(product.id)
+									className={`p-5 rounded-2xl transition-all shadow-xl flex items-center justify-center border-2 active:scale-95 ${isInWishlist(product.id)
 											? "bg-red-50 border-red-200 text-red-500 shadow-red-100"
 											: "bg-white border-gray-100 text-gray-400 hover:text-red-500 hover:border-red-100 shadow-gray-100"
-									}`}
+										}`}
 								>
 									<Heart
 										size={24}
@@ -442,11 +427,10 @@ export default function ProductDetailPage() {
 														onClick={() =>
 															setNewReview({ ...newReview, rating: num })
 														}
-														className={`p-2 rounded-xl transition-all ${
-															newReview.rating >= num
+														className={`p-2 rounded-xl transition-all ${newReview.rating >= num
 																? "text-yellow-400 bg-yellow-50"
 																: "text-gray-300 bg-white"
-														}`}
+															}`}
 													>
 														<Star
 															size={24}
